@@ -1,0 +1,70 @@
+---
+import Base from '../layouts/Base.astro';
+import Form from '../components/Form.astro';
+import Find from '../components/Find.astro';
+import { site, fullAddress } from '../site.config.mjs';
+
+const faqs = [
+  { q: 'When and where do you meet?', a: `${site.services[0].label} at ${fullAddress}.` },
+  { q: 'How long is the service?', a: 'About two hours, from 10 a.m. to 12 p.m. We sing, pray and hear a message from the Bible.' },
+  { q: 'What should I wear?', a: 'Whatever you would wear to a friend’s house for a meal. Some of us dress up and some of us don’t.' },
+  { q: 'Can I bring my children?', a: 'Yes. Children are part of the family here, and a little noise never bothered anyone.' },
+  { q: 'How do I get there?', a: 'We are on Fraser Street in South Vancouver, on the number 8 Fraser bus route. If you are driving, tell us you are coming and we will let you know the best place to park.' },
+  { q: 'Do I have to be a Christian to come?', a: 'No. Come with your questions, your doubts or plain curiosity. Everyone at this table started as a guest.' },
+];
+const faqSchema = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+};
+---
+<Base title="Plan a Visit" description={`Visiting ${site.name} for the first time? Here is what to expect on a Sunday at ${site.address.street}, Vancouver, and how to save your seat.`}>
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+  <section class="opener">
+    <div class="wrap">
+      <span class="label">Plan a visit</span>
+      <h1>Your first Sunday, <em>no surprises.</em></h1>
+      <p class="lede">Walking into a church for the first time takes some courage. Here is exactly what to expect, so the only new thing on Sunday is the people.</p>
+      <div class="actions"><a class="btn" href="#save-seat">Save my seat</a></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap two">
+      <div class="stack">
+        <span class="label">Good to know</span>
+        <h2>Before <em>you come.</em></h2>
+        <p class="soft">Something we haven't covered? <a class="inline" href="/contact">Ask us</a> and a real person will answer.</p>
+      </div>
+      <div class="faq">
+        {faqs.map((f, i) => <details open={i === 0}><summary>{f.q}</summary><p>{f.a}</p></details>)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section tint" id="save-seat">
+    <div class="wrap two">
+      <div class="stack">
+        <span class="label">Save a seat</span>
+        <h2>Tell us <em>you're coming.</em></h2>
+        <p class="lede">It takes a minute. Someone will be at the door on Sunday, looking out for you by name.</p>
+        <p class="soft">You are just as welcome to walk in unannounced. The seat is yours either way.</p>
+      </div>
+      <Form subject="New visitor: save a seat" button="Save my seat" id="plan-visit">
+        <div class="row">
+          <div class="field"><label for="v-name">Your name</label><input id="v-name" name="name" data-label="Name" autocomplete="name" required /></div>
+          <div class="field"><label for="v-email">Email</label><input id="v-email" name="email" type="email" data-label="Email" autocomplete="email" required /></div>
+        </div>
+        <div class="row">
+          <div class="field"><label for="v-phone">Phone (optional)</label><input id="v-phone" name="phone" type="tel" data-label="Phone" autocomplete="tel" /></div>
+          <div class="field"><label for="v-date">Which Sunday?</label><input id="v-date" name="visit_date" type="date" data-label="Visiting on" /></div>
+        </div>
+        <div class="field"><label for="v-size">How many seats?</label>
+          <select id="v-size" name="group_size" data-label="Seats"><option>Just me</option><option>2</option><option>3 to 4</option><option>5 or more</option></select>
+        </div>
+        <div class="field"><label for="v-note">Anything we should know? (optional)</label><textarea id="v-note" name="message" data-label="Note" placeholder="Children coming with you, accessibility needs, questions"></textarea></div>
+      </Form>
+    </div>
+  </section>
+
+  <Find />
+</Base>

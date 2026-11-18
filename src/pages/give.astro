@@ -1,0 +1,20 @@
+---
+import Base from '../layouts/Base.astro';
+import Quote from '../components/Quote.astro';
+import { site } from '../site.config.mjs';
+---
+<Base title="Give" description={`Support the work of ${site.name} in Vancouver through online giving.`}>
+  <section class="opener">
+    <div class="wrap">
+      <span class="label">Give</span>
+      <h1>Bread is <em>for sharing.</em></h1>
+      <p class="lede">Your giving keeps the table set, for the church family and for neighbours who have not found their seat yet.</p>
+      <div class="actions">
+        {site.giveUrl
+          ? <a class="btn" href={site.giveUrl} target="_blank" rel="noopener">Give online</a>
+          : <a class="btn" href="/contact">Ask us how to give</a>}
+      </div>
+    </div>
+  </section>
+  <Quote text="So let each one give as he purposes in his heart, not grudgingly or of necessity; for God loves a cheerful giver." cite="2 Corinthians 9:7" />
+</Base>

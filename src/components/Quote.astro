@@ -1,0 +1,10 @@
+---
+const { text, cite } = Astro.props;
+---
+<section class="section tint quote">
+  <div class="wrap">
+    <span class="ring" aria-hidden="true"></span>
+    <p>{text}</p>
+    <cite class="label" style="font-style:normal">{cite}</cite>
+  </div>
+</section>

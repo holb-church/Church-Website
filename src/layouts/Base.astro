@@ -1,0 +1,159 @@
+---
+import '../styles/global.css';
+import { site, fullAddress, mapsLink, telLink } from '../site.config.mjs';
+
+const { title, description = site.tagline, noindex = false, overHero = false } = Astro.props;
+const pageTitle = title ? `${title} | ${site.name}` : `${site.name} | Church in South Vancouver, BC`;
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const ogImage = new URL('/og.jpg', Astro.site).href;
+const path = Astro.url.pathname.replace(/\/$/, '') || '/';
+
+// Main menu, in the order a newcomer needs it.
+const menu = [
+  { href: '/visit', label: 'Plan a visit', note: 'Sundays, 10 a.m.' },
+  { href: '/about', label: 'About', note: 'Story, vision, pastors' },
+  { href: '/teachings', label: 'Teachings', note: 'Watch and listen' },
+  ...(site.giveUrl ? [{ href: '/give', label: 'Give', note: '' }] : []),
+  { href: '/contact', label: 'Contact', note: 'Questions and prayer' },
+];
+const socials = Object.entries(site.social).filter(([, url]) => url);
+const socialName = (n) => (n === 'youtube' ? 'YouTube' : n[0].toUpperCase() + n.slice(1));
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Church',
+  name: site.name,
+  alternateName: site.shortName,
+  description: site.tagline,
+  url: site.url,
+  logo: new URL('/icon-512.png', Astro.site).href,
+  image: ogImage,
+  telephone: site.phone,
+  email: site.email,
+  founder: [{ '@type': 'Person', name: 'Umesh Koli' }, { '@type': 'Person', name: 'Sweta Koli' }],
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: site.address.street,
+    addressLocality: site.address.city,
+    addressRegion: site.address.region,
+    postalCode: site.address.postalCode,
+    addressCountry: site.address.country,
+  },
+  openingHoursSpecification: site.services.map((s) => ({
+    '@type': 'OpeningHoursSpecification', dayOfWeek: s.day, opens: s.start, closes: s.end,
+  })),
+  sameAs: socials.map(([, url]) => url),
+};
+---
+<!doctype html>
+<html lang="en-CA">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <meta name="theme-color" content="#fffdf9" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&display=swap" />
+    {noindex && <meta name="robots" content="noindex" />}
+    <slot name="head" />
+    <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+    <header class:list={['site-header', { over: overHero }]}>
+      <div class="wrap">
+        <a class="brand" href="/" aria-label={`${site.name} home`}>
+          <img src="/logo-mark.png" alt="" width="880" height="432" />
+          <span>House of<br />Living Bread</span>
+        </a>
+        <div class="head-actions">
+          <a class="btn" href="/visit">Plan a visit</a>
+          <button class="menu-btn" type="button" aria-expanded="false" aria-controls="menu" data-menu-open><b>Menu</b><i aria-hidden="true"></i></button>
+        </div>
+      </div>
+    </header>
+
+    <div class="menu" id="menu" role="dialog" aria-modal="true" aria-label="Menu" hidden>
+      <div class="wrap bar">
+        <a class="brand" href="/" aria-label={`${site.name} home`}><img src="/logo-mark.png" alt="" width="880" height="432" /></a>
+        <button class="close" type="button" data-menu-close>Close<i aria-hidden="true"></i></button>
+      </div>
+      <div class="wrap body">
+        <nav aria-label="Main">
+          <ul>
+            <li><a href="/" aria-current={path === '/' ? 'page' : undefined}>Home</a></li>
+            {menu.map((m) => <li><a href={m.href} aria-current={path === m.href ? 'page' : undefined}>{m.label}{m.note && <small>{m.note}</small>}</a></li>)}
+          </ul>
+        </nav>
+        <aside>
+          <div><h3>Sundays</h3><p>{site.services[0].label}</p><p><a href={mapsLink} target="_blank" rel="noopener">{fullAddress}</a></p></div>
+          <div><h3>Reach us</h3><p><a href={telLink}>{site.phone}</a></p><p><a href={`mailto:${site.email}`}>{site.email}</a></p></div>
+          <div><h3>Follow</h3><ul>{socials.map(([n, url]) => <li><a href={url} target="_blank" rel="noopener">{socialName(n)}</a></li>)}</ul></div>
+        </aside>
+      </div>
+    </div>
+
+    <main id="main"><slot /></main>
+
+    <footer class="site-footer">
+      <div class="wrap top">
+        <h2>Come hungry.<br /><em>Leave fed.</em></h2>
+        <a class="btn btn-gold" href="/visit#save-seat">Save my seat</a>
+      </div>
+      <div class="wrap cols">
+        <div><img class="logo" src="/logo-full.png" alt={site.name} width="880" height="490" /></div>
+        <div>
+          <h3>Gather</h3>
+          <ul>
+            <li><a href="/visit">Plan a visit</a></li>
+            <li><a href="/visit#save-seat">Save a seat</a></li>
+            <li><a href={mapsLink} target="_blank" rel="noopener">Directions</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>About</h3>
+          <ul>
+            <li><a href="/about#story">Our story</a></li>
+            <li><a href="/about#vision">Our vision</a></li>
+            <li><a href="/about#pastors">Our pastors</a></li>
+            <li><a href="/about#beliefs">What we believe</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Grow</h3>
+          <ul>
+            <li><a href="/teachings">Teachings</a></li>
+            {socials.map(([n, url]) => <li><a href={url} target="_blank" rel="noopener">{socialName(n)}</a></li>)}
+            {site.giveUrl && <li><a href="/give">Give</a></li>}
+          </ul>
+        </div>
+        <div>
+          <h3>Connect</h3>
+          <ul>
+            <li>{site.services[0].label}</li>
+            <li><a href={mapsLink} target="_blank" rel="noopener"><address>{site.address.street}<br />{site.address.city}, {site.address.region} {site.address.postalCode}</address></a></li>
+            <li><a href={telLink}>{site.phone}</a></li>
+            <li><a href={`mailto:${site.email}`}>{site.email}</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="wrap legal">
+        <span>© {new Date().getFullYear()} {site.name}. {fullAddress}.</span>
+        <span>Scripture taken from the New King James Version®. Copyright © 1982 by Thomas Nelson. Used by permission. All rights reserved.</span>
+      </div>
+    </footer>
+    <script src="/site.js" defer></script>
+  </body>
+</html>

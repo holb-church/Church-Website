@@ -1,0 +1,10 @@
+---
+import { site } from '../site.config.mjs';
+const id = site.youtubeChannelId;
+const uploads = id ? 'UU' + id.slice(2) : '';
+---
+<div class="frame">
+  {id
+    ? <iframe src={`https://www.youtube-nocookie.com/embed/videoseries?list=${uploads}`} title={`Latest messages from ${site.name}`} loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+    : <a class="card-link" href={site.social.youtube} target="_blank" rel="noopener"><span class="play" aria-hidden="true"></span><span>Watch the latest message on YouTube</span></a>}
+</div>

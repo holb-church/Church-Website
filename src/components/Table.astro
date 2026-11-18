@@ -1,0 +1,27 @@
+---
+// The table seen from above: twelve places, one of them set for the visitor.
+const seats = Array.from({ length: 12 }, (_, i) => {
+  const a = ((-90 + i * 30) * Math.PI) / 180;
+  return { i, sx: 250 * Math.cos(a), sy: 250 * Math.sin(a), px: 138 * Math.cos(a), py: 138 * Math.sin(a), yours: i === 1 };
+});
+const r = (n) => n.toFixed(1);
+---
+<svg class="table" viewBox="-320 -320 640 640" role="img" aria-label="A round table seen from above with twelve places. One place is marked as yours.">
+  <circle class="top set" style="--i:0" r="182" />
+  <circle class="top-in set" style="--i:1" r="168" />
+  <g class="loaf set" style="--i:2">
+    <circle r="50" />
+    <path d="M-26 -22 Q0 -34 26 -22 M-34 0 Q0 -13 34 0 M-26 22 Q0 10 26 22" />
+  </g>
+  {seats.map((s) => (
+    <g class="set" style={`--i:${s.i + 3}`}>
+      {s.yours && <circle class="halo" cx={r(s.sx)} cy={r(s.sy)} r="24" />}
+      <circle class:list={['seat', { yours: s.yours }]} cx={r(s.sx)} cy={r(s.sy)} r="24" />
+      <circle class="plate" cx={r(s.px)} cy={r(s.py)} r="15" />
+    </g>
+  ))}
+  <g class="set" style="--i:16">
+    <line class="lead" x1="146" y1="-238" x2="186" y2="-276" />
+    <text class="tag" x="194" y="-278">Yours</text>
+  </g>
+</svg>

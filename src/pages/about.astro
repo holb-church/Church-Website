@@ -1,0 +1,113 @@
+---
+import Base from '../layouts/Base.astro';
+import Table from '../components/Table.astro';
+import Quote from '../components/Quote.astro';
+import { site } from '../site.config.mjs';
+
+const vision = [
+  { title: 'Reaching people', text: 'We share the unconditional love of Jesus with anyone who will listen, so that people are reconciled to God and come to know him for themselves.', verse: 'For the Son of Man has come to seek and to save that which was lost.', ref: 'Luke 19:10' },
+  { title: 'Setting people free', text: 'No chain is too strong and no life is beyond the reach of his grace. We expect to see people walk in the freedom Jesus paid for on the cross.', verse: 'Therefore if the Son makes you free, you shall be free indeed.', ref: 'John 8:36' },
+  { title: 'Transforming lives', text: 'As the Word of God renews our minds, faith wakes up and lives change. We want to raise believers who live from who they are in Christ, not from performance.', verse: 'But be transformed by the renewing of your mind.', ref: 'Romans 12:2' },
+  { title: 'Restoring hearts', text: 'Here the weary find rest, the lonely find family, and the broken-hearted meet the healing love of the Father. Everyone discovers they are loved, accepted and valued in Christ.', verse: 'He heals the brokenhearted and binds up their wounds.', ref: 'Psalm 147:3' },
+  { title: 'Building a family of faith', text: 'Church is more than a Sunday gathering. It is a family of friendship, discipleship and growth, where people are known, strengthened and equipped for their God-given purpose.', verse: 'You are no longer strangers and foreigners, but fellow citizens with the saints and members of the household of God.', ref: 'Ephesians 2:19' },
+];
+---
+<Base title="About" description={`${site.name} is a church in Vancouver, BC, led by Pastors Umesh and Sweta Koli. Our vision: revealing Jesus, transforming lives, restoring hearts.`}>
+  <section class="opener opener-table">
+    <div class="wrap">
+      <div class="copy">
+        <span class="label">About</span>
+        <h1>There's a place <em>set for you.</em></h1>
+        <p class="lede">{site.name} is a church family in Vancouver: a place to encounter Jesus, a family to belong to, and a life to grow in.</p>
+        <div class="actions"><a class="arrow" href="#vision">Our vision</a><a class="arrow" href="#pastors">Our pastors</a></div>
+      </div>
+      <Table />
+    </div>
+  </section>
+
+  <section class="section" id="story">
+    <div class="wrap offset">
+      <div class="head">
+        <span class="label">Our name</span>
+        <h2>Bethlehem means <em>house of bread.</em></h2>
+      </div>
+      <div class="body">
+        <p class="lede">That is where the story starts: Jesus was born in a small town named for bread.</p>
+        <p class="soft">Years later, after feeding a hungry crowd, he told them what the bread had been pointing to: “I am the living bread which came down from heaven. If anyone eats of this bread, he will live forever.”</p>
+        <p class="soft">Our name holds both halves. A house, because church is a family before it is a meeting. Living bread, because Jesus is who we come for, and he satisfies a hunger nothing else can.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section tint" id="vision">
+    <div class="wrap stack-lg">
+      <div class="offset">
+        <div class="head">
+          <span class="label">Our vision</span>
+          <h2>Revealing Jesus. Transforming lives. <em>Restoring hearts.</em></h2>
+        </div>
+        <div class="body">
+          <p class="lede">We want to see Jesus revealed, lives transformed, hearts restored, and people brought into the fullness of life found in him.</p>
+          <p class="soft">The gospel is the power of God for salvation. It is not a message of religion but the revelation of Jesus Christ: his love, his grace, his finished work, and his life in us. Our heart is for people to meet him personally and settle into who they are as sons and daughters of God.</p>
+        </div>
+      </div>
+      <ol class="vision">
+        {vision.map((v) => (
+          <li>
+            <h3>{v.title}</h3>
+            <div>
+              <p>{v.text}</p>
+              <blockquote class="verse">“{v.verse}”<cite>{v.ref}</cite></blockquote>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section class="band" id="city">
+    <div class="wrap">
+      <span class="label">Our heart for the city</span>
+      <h2>Vancouver is <em>for Jesus.</em></h2>
+      <p class="lede">Our prayer is to see the love of Christ reach homes, transform families, restore generations and bring hope to our city.</p>
+      <p>We want to be a church that carries the presence of God beyond its gatherings and shows the heart of Jesus in everyday life: at work, at school, on the bus and around the dinner table.</p>
+    </div>
+  </section>
+
+  <section class="section" id="pastors">
+    <div class="wrap pastors">
+      <figure>
+        <img src="/pastors.jpg" alt="Pastors Umesh and Sweta Koli" width="900" height="1125" />
+        <figcaption>{site.pastor.name}, {site.pastor.role.toLowerCase()}</figcaption>
+      </figure>
+      <div class="stack">
+        <span class="label">{site.pastor.role}</span>
+        <h2>Pastors Umesh <em>&amp; Sweta Koli</em></h2>
+        <p class="lede">Pastors Umesh and Sweta are passionate about Jesus Christ and the transforming power of his Word. Their heart is to see people encounter the love of God, discover their identity in Christ, and experience the fullness of life that comes through the finished work of Jesus.</p>
+        <p class="soft">With a deep conviction that the gospel is not merely a message to be heard but a revelation to be lived, their ministry is centred on unveiling Jesus through the Scriptures, teaching the riches of God’s grace, and establishing believers in the gift of righteousness. They carry a passion to see people move beyond religious performance into a living, intimate relationship with the Father, rooted in the finished work of the cross.</p>
+        <p class="soft">They believe the church is more than a gathering: it is a family, a place of belonging, genuine friendship and spiritual growth, where every person has a place. Together they lead House of Living Bread in Vancouver, British Columbia, with a vision to build a Christ-centred community where Jesus is exalted, the Word is alive, the Holy Spirit is welcomed, and people are strengthened to fulfil their God-given purpose.</p>
+        <p class="soft">Their desire is simple: to see people encounter Jesus, feast on his life, and become everything God has called them to be.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section tint" id="beliefs">
+    <div class="wrap stack-lg">
+      <div class="stack">
+        <span class="label">What we believe</span>
+        <h2>What's <em>on the table.</em></h2>
+      </div>
+      <ul class="plain">
+        <li><h3>Jesus is the living bread.</h3><p>Jesus Christ is the Son of God. He died for our sins, rose again, and gives eternal life to all who come to him.</p></li>
+        <li><h3>His work is finished.</h3><p>On the cross Jesus did everything needed to bring us to God. We do not earn his love; we receive it and rest in what he has done.</p></li>
+        <li><h3>Righteousness is a gift.</h3><p>We are made right with God by grace through faith in Jesus, and we live from that identity rather than for it.</p></li>
+        <li><h3>The Word is alive.</h3><p>The Bible is God’s Word. It reveals Jesus, renews our minds, and is opened at every gathering.</p></li>
+        <li><h3>The Holy Spirit is welcome.</h3><p>The Spirit lives in every believer, and we make room for him to lead, comfort and empower us.</p></li>
+        <li><h3>The church is a family.</h3><p>We belong to one another, and together we carry the love of Jesus into our city.</p></li>
+      </ul>
+      <p class="soft">The longer version is best had in conversation. <a class="inline" href="/contact">Ask us anything</a>.</p>
+    </div>
+  </section>
+
+  <Quote text="I am the living bread which came down from heaven. If anyone eats of this bread, he will live forever." cite="John 6:51" />
+</Base>

@@ -1,0 +1,34 @@
+---
+import Base from '../layouts/Base.astro';
+import Form from '../components/Form.astro';
+import { site, fullAddress, mapsLink, telLink } from '../site.config.mjs';
+---
+<Base title="Contact" description={`Contact ${site.name}: ${fullAddress}. Call ${site.phone} or send us a message or prayer request.`}>
+  <section class="opener">
+    <div class="wrap">
+      <span class="label">Contact</span>
+      <h1>Pull up <em>a chair.</em></h1>
+      <p class="lede">A question, a prayer request, or just hello. Write to us and a real person from the church will write back.</p>
+    </div>
+  </section>
+  <section class="section flush-top">
+    <div class="wrap two">
+      <dl class="facts">
+        <div><dt>Visit</dt><dd><a href={mapsLink} target="_blank" rel="noopener">{fullAddress}</a></dd></div>
+        <div><dt>When</dt><dd>{site.services[0].label}</dd></div>
+        <div><dt>Call</dt><dd><a href={telLink}>{site.phone}</a></dd></div>
+        <div><dt>Write</dt><dd><a href={`mailto:${site.email}`}>{site.email}</a></dd></div>
+      </dl>
+      <Form subject="Message from the website" button="Send message" id="contact">
+        <div class="row">
+          <div class="field"><label for="c-name">Your name</label><input id="c-name" name="name" data-label="Name" autocomplete="name" required /></div>
+          <div class="field"><label for="c-email">Email</label><input id="c-email" name="email" type="email" data-label="Email" autocomplete="email" required /></div>
+        </div>
+        <div class="field"><label for="c-topic">What is this about?</label>
+          <select id="c-topic" name="topic" data-label="Topic"><option>A question</option><option>A prayer request</option><option>Planning a visit</option><option>Something else</option></select>
+        </div>
+        <div class="field"><label for="c-msg">Message</label><textarea id="c-msg" name="message" data-label="Message" required></textarea></div>
+      </Form>
+    </div>
+  </section>
+</Base>

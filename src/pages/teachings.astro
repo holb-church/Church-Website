@@ -1,0 +1,31 @@
+---
+import Base from '../layouts/Base.astro';
+import Watch from '../components/Watch.astro';
+import { site } from '../site.config.mjs';
+---
+<Base title="Teachings" description={`Watch the latest teachings from ${site.name} in Vancouver, BC. New messages are added after each Sunday gathering.`}>
+  <section class="opener">
+    <div class="wrap">
+      <div class="baskets" aria-hidden="true">{Array.from({ length: 12 }, () => <i></i>)}</div>
+      <span class="label">Teachings</span>
+      <h1>Twelve baskets <em>left over.</em></h1>
+      <p class="lede">When Jesus fed the five thousand, there was more than anyone could finish. If you missed Sunday, the message is here, as fresh as when it was served.</p>
+    </div>
+  </section>
+  <section class="section flush-top">
+    <div class="wrap stack-lg">
+      <Watch />
+      <div class="actions">
+        <a class="btn" href={site.social.youtube} target="_blank" rel="noopener">Subscribe on YouTube</a>
+        {site.social.instagram && <a class="arrow" href={site.social.instagram} target="_blank" rel="noopener">Follow on Instagram</a>}
+      </div>
+    </div>
+  </section>
+  <section class="band">
+    <div class="wrap">
+      <h2>Better <em>at the table.</em></h2>
+      <p class="lede">A teaching online is a meal to go. It is good, and it is better shared. Join us {site.services[0].label.replace('Sundays', 'on Sundays')}.</p>
+      <a class="btn btn-gold" href="/visit">Plan a visit</a>
+    </div>
+  </section>
+</Base>

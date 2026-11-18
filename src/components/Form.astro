@@ -1,0 +1,17 @@
+---
+// One form component for the whole site.
+// With a formKey in site.config.mjs it sends to the church inbox; without one it opens the visitor's email app.
+import { site } from '../site.config.mjs';
+const { subject, button = 'Send', id } = Astro.props;
+const thanks = new URL('/thanks', Astro.site).href;
+---
+<form class="form" id={id} action={site.formKey ? 'https://api.web3forms.com/submit' : undefined} method="post" data-mailto={site.formKey ? undefined : site.email} data-subject={subject}>
+  {site.formKey && <input type="hidden" name="access_key" value={site.formKey} />}
+  <input type="hidden" name="subject" value={subject} />
+  <input type="hidden" name="from_name" value={`${site.name} website`} />
+  <input type="hidden" name="redirect" value={thanks} />
+  <input class="hp" type="checkbox" name="botcheck" tabindex="-1" autocomplete="off" aria-hidden="true" />
+  <slot />
+  <div><button class="btn" type="submit">{button}</button></div>
+  {!site.formKey && <small>This opens your email app with your message ready to send.</small>}
+</form>

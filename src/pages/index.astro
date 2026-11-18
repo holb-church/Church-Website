@@ -1,0 +1,131 @@
+---
+import Base from '../layouts/Base.astro';
+import Find from '../components/Find.astro';
+import Watch from '../components/Watch.astro';
+import { site } from '../site.config.mjs';
+const s = site.services[0];
+const dayIndex = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'].indexOf(s.day);
+---
+<Base overHero description={`${site.name} is a church in South Vancouver, BC: a place to encounter Jesus, a family to belong to, and a life to grow in. Join us Sundays at 10 a.m. at ${site.address.street}.`}>
+  <Fragment slot="head"><link rel="preload" as="image" href="/photo-table.jpg" media="(min-width: 52.01rem)" /></Fragment>
+
+  <section class="hero">
+    <picture>
+      <source media="(max-width: 52rem)" srcset="/photo-table-tall.jpg" />
+      <img src="/photo-table.jpg" alt="A church family laughing together around a long table as a loaf of bread is passed across it" width="2400" height="1340" fetchpriority="high" />
+    </picture>
+    <div class="wrap">
+      <div class="hero-copy">
+        <span class="label" style="color:var(--gold)">House of Living Bread · Vancouver</span>
+        <h1>A place to <em>encounter Jesus.</em></h1>
+        <p class="lede">A family to belong to, and a life to grow in. There is a seat at the table for you this Sunday.</p>
+        <div class="actions">
+          <a class="btn btn-gold" href="/visit">Plan your visit</a>
+          <a class="btn btn-line" href="/teachings">Watch a teaching</a>
+        </div>
+      </div>
+      <div class="next" data-next data-day={dayIndex} data-end={parseInt(s.end)} data-time="10 a.m.">
+        <span class="label">Next Sunday</span>
+        <strong>Every Sunday, 10 a.m.</strong>
+        <span>{site.address.street}, {site.address.city}. <span data-away></span></span>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap offset">
+      <div class="head">
+        <span class="label">Sunday gatherings</span>
+        <h2>Sundays at <em>10 a.m.</em></h2>
+      </div>
+      <div class="body">
+        <p class="lede">Every Sunday we gather to worship, open the Bible, pray for one another and make room for the Holy Spirit. Everyone is welcome.</p>
+        <dl class="facts">
+          <div><dt>Time</dt><dd>{s.label}</dd></div>
+          <div><dt>Place</dt><dd>{site.address.street}, {site.address.city}</dd></div>
+        </dl>
+        <a class="btn btn-line" href="/visit">What to expect</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="band">
+    <div class="wrap">
+      <span class="label">Our heart for the city</span>
+      <h2>Vancouver is <em>for Jesus.</em></h2>
+      <p class="lede">We pray to see his love reach homes, heal families and restore generations across this city, carried by a church that brings his presence into everyday life.</p>
+      <a class="btn btn-line" href="/about#city">Our heart for Vancouver</a>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap offset flip">
+      <div class="head">
+        <span class="label">New here?</span>
+        <h2>New to <em>the house?</em></h2>
+      </div>
+      <div class="body">
+        <p class="lede">Whether you are new to Vancouver, new to faith, or simply curious, we would love to meet you.</p>
+        <p class="soft">A Sunday runs about two hours. Children are welcome, and you can come as you are. Tell us you are coming and someone will meet you at the door.</p>
+        <div class="actions"><a class="btn" href="/visit#save-seat">Save my seat</a><a class="arrow" href="/visit">Your first Sunday</a></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section tint">
+    <div class="wrap stack-lg">
+      <div class="stack">
+        <span class="label">Our vision</span>
+        <h2>Revealing Jesus. Transforming lives. <em>Restoring hearts.</em></h2>
+      </div>
+      <div class="path">
+        <div>
+          <h3><em>Encounter</em> Jesus.</h3>
+          <p>The gospel is not a religious programme. It is Jesus himself: his love, his grace and the work he finished for you.</p>
+          <a class="arrow" href="/visit">Come on Sunday</a>
+        </div>
+        <div>
+          <h3><em>Belong</em> to a family.</h3>
+          <p>Church is more than a meeting. It is a household where you are known, loved and never a stranger.</p>
+          <a class="arrow" href="/about#vision">Our vision</a>
+        </div>
+        <div>
+          <h3><em>Grow</em> in his life.</h3>
+          <p>As the Word renews our minds, faith wakes up and lives change. We grow into who God already says we are.</p>
+          <a class="arrow" href="/teachings">Teachings</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap offset">
+      <div class="head">
+        <span class="label">Latest teaching</span>
+        <h2>Fresh bread, <em>every week.</em></h2>
+      </div>
+      <div class="body">
+        <p class="lede">Missed a Sunday, or want to hear a message again? Watch or listen to recent teachings from our gatherings.</p>
+        <a class="btn btn-line" href="/teachings">All teachings</a>
+      </div>
+      <div class="wide"><Watch /></div>
+    </div>
+  </section>
+
+  <section class="section tint">
+    <div class="wrap pastors">
+      <figure>
+        <img src="/pastors.jpg" alt="Pastors Umesh and Sweta Koli" width="900" height="1125" />
+        <figcaption>Pastors Umesh &amp; Sweta Koli, founders and lead pastors</figcaption>
+      </figure>
+      <div class="stack">
+        <span class="label">Our pastors</span>
+        <h2>Meet Umesh <em>&amp; Sweta.</em></h2>
+        <p class="lede">Umesh and Sweta founded House of Living Bread with one desire: to see people encounter Jesus, feast on his life, and become everything God has called them to be.</p>
+        <a class="arrow" href="/about#pastors">Read their story</a>
+      </div>
+    </div>
+  </section>
+
+  <Find />
+</Base>
