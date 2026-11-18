@@ -42,7 +42,7 @@ export const site = {
 
   // Access key from web3forms.com (free; sign up with the church email).
   // When set, forms send straight to the church inbox. When empty, forms open the visitor's email app.
-  formKey: '',
+  formKey: 'c9258a26-2afa-4433-9f9f-2cedbb4e5c1d',
 
   // Lead pastors. Their bio is written out on the About page (src/pages/about.astro).
   pastor: { name: 'Pastors Umesh & Sweta Koli', role: 'Founders & Lead Pastors', photo: '/pastors.jpg' },
