@@ -1,0 +1,62 @@
+---
+import Base from '../layouts/Base.astro';
+import { site, fullAddress } from '../site.config.mjs';
+const updated = 'November 2026';
+---
+<Base title="Privacy Notice" description={`How ${site.name} collects, uses and protects the personal information you share through this website.`}>
+  <section class="opener">
+    <div class="wrap">
+      <span class="label">Privacy notice</span>
+      <h1>Your details, <em>handled with care.</em></h1>
+      <p class="lede">This notice explains what personal information {site.name} collects through this website, why we collect it, and how we look after it.</p>
+      <p class="soft">Last updated {updated}.</p>
+    </div>
+  </section>
+
+  <section class="section flush-top">
+    <div class="wrap prose">
+      <h2>Who we are</h2>
+      <p>{site.name} is a church at {fullAddress}. We are responsible for the personal information described here. Questions about privacy go to our privacy contact at <a class="inline" href={`mailto:${site.email}`}>{site.email}</a> or {site.phone}.</p>
+
+      <h2>What we collect and why</h2>
+      <p>We only collect what you choose to send us through the forms on this site.</p>
+      <ul>
+        <li><strong>Save my seat (Plan a Visit):</strong> your name, email, and optionally your phone number, the Sunday you plan to come, how many are coming and any note you add. We use it to welcome you and to reply to your questions.</li>
+        <li><strong>Contact form:</strong> your name, email, the topic and your message. We use it to reply to you.</li>
+        <li><strong>Prayer requests:</strong> if you send one, we use it only to pray for you and, if you ask, to follow up with you. Because a prayer request can be personal, we share it only with the pastors.</li>
+      </ul>
+      <p>By sending a form, you agree to us using your details for these purposes. We never sell your information, use it for advertising, or add you to a mailing list without asking.</p>
+
+      <h2>Who can see it</h2>
+      <p>Form messages are read by the pastors and the members of our welcome team who reply to guests. Nobody else at the church sees them.</p>
+
+      <h2>Services that help run this site</h2>
+      <p>We use a few outside services. Some of them store or process information outside Canada, including in the United States, where it may be accessible under the laws of that country.</p>
+      <ul>
+        <li><strong>Web3Forms</strong> delivers form messages to our church email.</li>
+        <li><strong>Gmail (Google)</strong> is where we receive and keep those messages.</li>
+        <li><strong>Vercel</strong> hosts this website. Like most hosts, it keeps short-term technical logs, such as IP addresses, to run and protect the site.</li>
+        <li><strong>YouTube and Google Maps (Google)</strong> show our teachings and our map. They run on pages where they appear.</li>
+        <li><strong>Google Fonts</strong> supplies the typefaces on this site.</li>
+      </ul>
+
+      <h2 id="cookies">Cookies</h2>
+      <p>This website does not set its own tracking or advertising cookies. The YouTube video player and the Google map can set cookies or similar technology when they load or when you play a video. Google uses these to deliver the service and as described in its own privacy policy. By using this site, you accept their use. You can block or delete cookies in your browser settings at any time; the rest of the site will still work.</p>
+
+      <h2>How long we keep it</h2>
+      <p>We keep form messages for up to 12 months after our last contact with you, then delete them, unless you have become part of the church family and want to stay in touch.</p>
+
+      <h2>How we protect it</h2>
+      <p>Messages are kept in a church email account protected by a strong password and two-step sign-in, and only the people named above can open it.</p>
+
+      <h2>Your choices</h2>
+      <p>You can ask to see the personal information we hold about you, ask us to correct it, or ask us to delete it and stop contacting you. Email <a class="inline" href={`mailto:${site.email}`}>{site.email}</a> and we will respond within 30 days. If you are not satisfied with our answer, you can contact the Office of the Information and Privacy Commissioner for British Columbia.</p>
+
+      <h2>Children</h2>
+      <p>Our forms are meant for adults. If you are under 16, please ask a parent or guardian to contact us for you.</p>
+
+      <h2>Changes to this notice</h2>
+      <p>If we change how we handle personal information, we will update this page and the date at the top.</p>
+    </div>
+  </section>
+</Base>

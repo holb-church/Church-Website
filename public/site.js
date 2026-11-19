@@ -46,3 +46,16 @@ document.querySelectorAll('form[data-mailto]').forEach(function (f) {
     location.href = 'mailto:' + f.dataset.mailto + '?subject=' + encodeURIComponent(f.dataset.subject) + '&body=' + encodeURIComponent(lines.join('\n'));
   });
 });
+
+// Cookie notice: shown until the visitor presses OK. Information only; nothing is blocked.
+(function () {
+  var note = document.querySelector('[data-cookie-note]');
+  if (!note) return;
+  var key = 'holb-cookie-notice-ok';
+  try { if (localStorage.getItem(key)) return; } catch (e) {}
+  note.hidden = false;
+  note.querySelector('[data-cookie-ok]').addEventListener('click', function () {
+    note.hidden = true;
+    try { localStorage.setItem(key, '1'); } catch (e) {}
+  });
+})();

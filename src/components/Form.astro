@@ -13,5 +13,6 @@ const thanks = new URL('/thanks', Astro.site).href;
   <input class="hp" type="checkbox" name="botcheck" tabindex="-1" autocomplete="off" aria-hidden="true" />
   <slot />
   <div><button class="btn" type="submit">{button}</button></div>
+  <small>We use your details only to reply to you. See our <a class="inline" href="/privacy">privacy notice</a>.</small>
   {!site.formKey && <small>This opens your email app with your message ready to send.</small>}
 </form>
