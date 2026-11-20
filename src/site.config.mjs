@@ -37,12 +37,17 @@ export const site = {
   ],
 
   // Transit directions from major hubs, shown under the map on Plan a Visit.
-  // Checked November 2026. Update if TransLink changes a route.
+  // Checked November 2026 against TransLink route and stop listings and OpenStreetMap:
+  // the church is on Fraser Street between E 50th and E 51st Avenue, about 150 m south of 49th Avenue.
+  // The 49 runs along 49th Avenue between Metrotown and Langara-49th Avenue stations and stops at Fraser Street.
+  // The 8 runs from Waterfront Station along Main Street and Fraser Street; its southbound stop
+  // "Fraser St @ E 51 Ave" (#50795) is next to the church. The R2 RapidBus links Brentwood Town Centre and Metrotown.
   transit: [
-    { from: 'Metrotown Station', line: 'Expo Line', steps: 'Take the 49 bus toward UBC. Get off at Fraser Street and walk about two blocks south.' },
-    { from: 'Langara–49th Avenue Station', line: 'Canada Line', steps: 'Take the 49 bus toward Metrotown. Get off at Fraser Street and walk about two blocks south.' },
-    { from: 'Downtown Vancouver', line: 'Waterfront Station', steps: 'Take the 8 Fraser bus south. It runs along Fraser Street and stops close to the church.' },
-    { from: 'Brentwood, Burnaby or Surrey', line: 'Millennium or Expo Line', steps: 'Ride SkyTrain to Metrotown Station, then follow the Metrotown directions.' },
+    { from: 'Metrotown Station', line: 'Expo Line', steps: 'Take the 49 bus toward UBC and get off at Fraser Street. Walk south on Fraser for about two minutes.' },
+    { from: 'Langara–49th Avenue Station', line: 'Canada Line', steps: 'Take the 49 bus toward Metrotown and get off at Fraser Street. Walk south on Fraser for about two minutes.' },
+    { from: 'Waterfront or Main Street–Science World', line: 'Downtown Vancouver', steps: 'Take the 8 Fraser bus heading south and get off at Fraser Street and East 51st Avenue, right by the church.' },
+    { from: 'Brentwood Town Centre Station', line: 'Millennium Line', steps: 'Take the R2 RapidBus to Metrotown Station, then follow the Metrotown directions.' },
+    { from: 'Surrey, New Westminster and the Expo Line', line: 'Expo Line', steps: 'Every Expo Line train stops at Metrotown Station. Get off there and follow the Metrotown directions.' },
   ],
 
   // Other regular gatherings, shown on the Get Involved page.
