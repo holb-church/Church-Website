@@ -36,6 +36,15 @@ export const site = {
     { time: '11:30 a.m.', title: 'Stay a while', text: 'The service ends, but the conversation keeps going. The pastors are always around to pray with anyone who would like it.' },
   ],
 
+  // Transit directions from major hubs, shown under the map on Plan a Visit.
+  // Checked November 2026. Update if TransLink changes a route.
+  transit: [
+    { from: 'Metrotown Station', line: 'Expo Line', steps: 'Take the 49 bus toward UBC. Get off at Fraser Street and walk about two blocks south.' },
+    { from: 'Langara–49th Avenue Station', line: 'Canada Line', steps: 'Take the 49 bus toward Metrotown. Get off at Fraser Street and walk about two blocks south.' },
+    { from: 'Downtown Vancouver', line: 'Waterfront Station', steps: 'Take the 8 Fraser bus south. It runs along Fraser Street and stops close to the church.' },
+    { from: 'Brentwood, Burnaby or Surrey', line: 'Millennium or Expo Line', steps: 'Ride SkyTrain to Metrotown Station, then follow the Metrotown directions.' },
+  ],
+
   // Other regular gatherings, shown on the Get Involved page.
   gatherings: {
     prayer: { name: 'Last Friday Prayer', when: 'Last Friday of every month', time: '6 to 7:30 p.m.' },

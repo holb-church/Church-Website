@@ -1,6 +1,6 @@
 ---
 import { site, fullAddress, mapsLink, mapsEmbed, telLink } from '../site.config.mjs';
-const { id = 'find', tint = false } = Astro.props;
+const { id = 'find', tint = false, routes = false } = Astro.props;
 ---
 <section class:list={['section', { tint }]} id={id}>
   <div class="wrap two find">
@@ -23,4 +23,19 @@ const { id = 'find', tint = false } = Astro.props;
       <iframe src={mapsEmbed} title={`Map showing ${fullAddress}`} loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
     </div>
   </div>
+  {routes && (
+    <div class="wrap routes">
+      <h3>Getting here by transit</h3>
+      <ul>
+        {site.transit.map((r) => (
+          <li>
+            <span class="label">{r.line}</span>
+            <strong>From {r.from}</strong>
+            <p>{r.steps}</p>
+          </li>
+        ))}
+      </ul>
+      <p class="soft">Bus stops sometimes change. For live times, tap Get directions or use the Transit app.</p>
+    </div>
+  )}
 </section>
