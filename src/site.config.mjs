@@ -50,7 +50,7 @@ export const site = {
   social: {
     youtube: 'https://www.youtube.com/@HouseofLivingBread',
     instagram: 'https://www.instagram.com/house_of_living_bread/',
-    facebook: '',
+    facebook: 'https://www.facebook.com/profile.php?id=61593240080883',
     threads: '',
     x: '',
   },

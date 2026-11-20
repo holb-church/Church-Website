@@ -6,7 +6,7 @@ const seats = Array.from({ length: 12 }, (_, i) => {
 });
 const r = (n) => n.toFixed(1);
 ---
-<svg class="table" viewBox="-320 -320 640 640" role="img" aria-label="A round table seen from above with twelve places. One place is marked as yours.">
+<svg class="table" viewBox="-320 -320 640 640" role="img" aria-label="A round table seen from above with twelve places. One place is marked as your seat.">
   <circle class="top set" style="--i:0" r="182" />
   <circle class="top-in set" style="--i:1" r="168" />
   <g class="loaf set" style="--i:2">
@@ -22,6 +22,6 @@ const r = (n) => n.toFixed(1);
   ))}
   <g class="set" style="--i:16">
     <line class="lead" x1="146" y1="-238" x2="186" y2="-276" />
-    <text class="tag" x="194" y="-278">Yours</text>
+    <text class="tag" x="194" y="-278">Your seat</text>
   </g>
 </svg>
