@@ -1,7 +1,8 @@
 ---
 import { site, fullAddress, mapsLink, mapsEmbed, telLink } from '../site.config.mjs';
+const { id = 'find', tint = false } = Astro.props;
 ---
-<section class="section">
+<section class:list={['section', { tint }]} id={id}>
   <div class="wrap two">
     <div class="stack-lg">
       <div class="stack">
@@ -10,11 +11,13 @@ import { site, fullAddress, mapsLink, mapsEmbed, telLink } from '../site.config.
       </div>
       <dl class="facts">
         <div><dt>When</dt><dd>{site.services[0].label}</dd></div>
-        <div><dt>Where</dt><dd><a href={mapsLink} target="_blank" rel="noopener">{site.address.street}, {site.address.city}, {site.address.region} {site.address.postalCode}</a></dd></div>
-        <div><dt>Call</dt><dd><a href={telLink}>{site.phone}</a></dd></div>
+        <div><dt>Where</dt><dd><a href={mapsLink} target="_blank" rel="noopener">{fullAddress}</a></dd></div>
+        <div><dt>Parking</dt><dd>Plenty of free street parking nearby</dd></div>
+        <div><dt>Transit</dt><dd>Buses run along Fraser Street, close to the door</dd></div>
+        {site.phone && <div><dt>Call</dt><dd><a href={telLink}>{site.phone}</a></dd></div>}
         <div><dt>Write</dt><dd><a href={`mailto:${site.email}`}>{site.email}</a></dd></div>
       </dl>
-      <a class="arrow" href={mapsLink} target="_blank" rel="noopener">Get directions</a>
+      <a class="btn btn-line" href={mapsLink} target="_blank" rel="noopener">Get directions</a>
     </div>
     <div class="frame map">
       <iframe src={mapsEmbed} title={`Map showing ${fullAddress}`} loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>

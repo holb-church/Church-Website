@@ -4,31 +4,50 @@ import Form from '../components/Form.astro';
 import Find from '../components/Find.astro';
 import { site, fullAddress } from '../site.config.mjs';
 
+// `link` adds a button under the answer.
 const faqs = [
-  { q: 'When and where do you meet?', a: `${site.services[0].label} at ${fullAddress}.` },
-  { q: 'How long is the service?', a: 'About two hours, from 10 a.m. to 12 p.m. We sing, pray and hear a message from the Bible.' },
-  { q: 'What should I wear?', a: 'Whatever you would wear to a friend’s house for a meal. Some of us dress up and some of us don’t.' },
-  { q: 'Can I bring my children?', a: 'Yes. Children stay with their families in the service, and a little noise never bothered anyone.' },
-  { q: 'How do I get there?', a: 'We are on Fraser Street in South Vancouver, on the number 8 Fraser bus route. If you are driving, there is parking at the church, and street parking nearby when it fills up.' },
-  { q: 'Do I have to be a Christian to come?', a: 'No. Come with your questions, your doubts or plain curiosity. Everyone at this table started as a guest.' },
+  { q: 'When and where do you meet?', a: `Sundays at 10 a.m., at ${fullAddress}. Coffee is on from 9:30 if you would like to come early.` },
+  { q: 'How long is the service?', a: 'The service starts at 10 a.m. and ends by 11:30. Many people stay a little longer to chat, and the pastors are always around to pray with anyone who would like it.' },
+  { q: 'What should I wear?', a: 'Whatever you would wear to a friend’s place for a meal. Some of us dress up and some of us keep it casual. Both are perfect.' },
+  { q: 'Can I bring my children?', a: 'Please do. We have a kids’ ministry with caring teachers who help children learn about Jesus in a way they enjoy, so you can settle into the service. Bring snacks if your little one needs them; we won’t tell.' },
+  { q: 'How do I get there?', a: `We are at ${fullAddress}. There is plenty of free street parking nearby, and buses run along Fraser Street.`, link: { href: '#directions', label: 'Full directions' } },
+  { q: 'Do I have to be a Christian to come?', a: 'Come as you are. Bring your questions, your doubts or plain curiosity. Everyone at this table started as a guest.' },
 ];
 const faqSchema = {
   '@context': 'https://schema.org', '@type': 'FAQPage',
   mainEntity: faqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
 };
 ---
-<Base title="Plan a Visit" description={`Visiting ${site.name} for the first time? Here is what to expect on a Sunday at ${site.address.street}, Vancouver, and how to save your seat.`}>
+<Base title="Plan a Visit" description={`Visiting ${site.fullName} for the first time? The service starts Sundays at 10 a.m. at ${site.address.street}, Vancouver. Here is what to expect.`}>
   <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
   <section class="opener">
     <div class="wrap">
       <span class="label">Plan a visit</span>
       <h1>Your first Sunday, <em>no surprises.</em></h1>
-      <p class="lede">Walking into a church for the first time takes some courage. Here is exactly what to expect, so the only new thing on Sunday is the people.</p>
-      <div class="actions"><a class="btn" href="#save-seat">Save my seat</a></div>
+      <p class="lede">Walking into a new church takes some courage. Here is what to expect, and you will find friendly people ready to welcome you from the moment you arrive.</p>
+      <div class="actions"><a class="btn" href="#save-seat">Plan your visit</a></div>
     </div>
   </section>
 
-  <section class="section">
+  <section class="section flush-top">
+    <div class="wrap stack-lg">
+      <div class="stack">
+        <span class="label">A Sunday at the house</span>
+        <h2>Service starts at <em>10 a.m.</em></h2>
+      </div>
+      <ol class="flow">
+        {site.sundayFlow.map((f, i) => (
+          <li class:list={{ main: i === 1 }}>
+            <span class="time">{f.time}</span>
+            <h3>{f.title}</h3>
+            <p>{f.text}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section class="section tint">
     <div class="wrap two">
       <div class="stack">
         <span class="label">Good to know</span>
@@ -36,20 +55,25 @@ const faqSchema = {
         <p class="soft">Something we haven't covered? <a class="inline" href="/contact">Ask us</a> and a real person will answer.</p>
       </div>
       <div class="faq">
-        {faqs.map((f, i) => <details open={i === 0}><summary>{f.q}</summary><p>{f.a}</p></details>)}
+        {faqs.map((f, i) => (
+          <details open={i === 0}>
+            <summary>{f.q}</summary>
+            <p>{f.a}</p>
+            {f.link && <a class="arrow" href={f.link.href}>{f.link.label}</a>}
+          </details>
+        ))}
       </div>
     </div>
   </section>
 
-  <section class="section tint" id="save-seat">
+  <section class="section" id="save-seat">
     <div class="wrap two">
       <div class="stack">
-        <span class="label">Save a seat</span>
-        <h2>Tell us <em>you're coming.</em></h2>
-        <p class="lede">It takes a minute. Someone will be at the door on Sunday, looking out for you by name.</p>
-        <p class="soft">You are just as welcome to walk in unannounced. The seat is yours either way.</p>
+        <span class="label">Plan a visit</span>
+        <h2>Plan your <em>visit.</em></h2>
+        <p class="soft">A few details help us welcome you well. Only your name and email are needed.</p>
       </div>
-      <Form subject="New visitor: save a seat" button="Save my seat" id="plan-visit">
+      <Form subject="New visitor: planning a visit" button="Save my seat" id="plan-visit">
         <div class="row">
           <div class="field"><label for="v-name">Your name</label><input id="v-name" name="name" data-label="Name" autocomplete="name" required /></div>
           <div class="field"><label for="v-email">Email</label><input id="v-email" name="email" type="email" data-label="Email" autocomplete="email" required /></div>
@@ -58,13 +82,13 @@ const faqSchema = {
           <div class="field"><label for="v-phone">Phone (optional)</label><input id="v-phone" name="phone" type="tel" data-label="Phone" autocomplete="tel" /></div>
           <div class="field"><label for="v-date">Which Sunday?</label><input id="v-date" name="visit_date" type="date" data-label="Visiting on" /></div>
         </div>
-        <div class="field"><label for="v-size">How many seats?</label>
-          <select id="v-size" name="group_size" data-label="Seats"><option>Just me</option><option>2</option><option>3 to 4</option><option>5 or more</option></select>
+        <div class="field"><label for="v-size">How many are coming?</label>
+          <select id="v-size" name="group_size" data-label="Group size"><option>Just me</option><option>2</option><option>3 to 4</option><option>5 or more</option></select>
         </div>
-        <div class="field"><label for="v-note">Anything we should know? (optional)</label><textarea id="v-note" name="message" data-label="Note" placeholder="Children coming with you, accessibility needs, questions"></textarea></div>
+        <div class="field"><label for="v-note">Anything you want us to know? (optional)</label><textarea id="v-note" name="message" data-label="Note" placeholder="Children coming with you, questions, anything at all"></textarea></div>
       </Form>
     </div>
   </section>
 
-  <Find />
+  <Find id="directions" tint />
 </Base>

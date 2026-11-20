@@ -3,7 +3,7 @@ import Base from '../layouts/Base.astro';
 import Form from '../components/Form.astro';
 import { site, fullAddress, mapsLink, telLink } from '../site.config.mjs';
 ---
-<Base title="Contact" description={`Contact ${site.name}: ${fullAddress}. Call ${site.phone} or send us a message or prayer request.`}>
+<Base title="Contact" description={`Contact ${site.fullName}: ${fullAddress}. Send us a question, a prayer request or just a hello.`}>
   <section class="opener">
     <div class="wrap">
       <span class="label">Contact</span>
@@ -16,7 +16,7 @@ import { site, fullAddress, mapsLink, telLink } from '../site.config.mjs';
       <dl class="facts">
         <div><dt>Visit</dt><dd><a href={mapsLink} target="_blank" rel="noopener">{fullAddress}</a></dd></div>
         <div><dt>When</dt><dd>{site.services[0].label}</dd></div>
-        <div><dt>Call</dt><dd><a href={telLink}>{site.phone}</a></dd></div>
+        {site.phone && <div><dt>Call</dt><dd><a href={telLink}>{site.phone}</a></dd></div>}
         <div><dt>Write</dt><dd><a href={`mailto:${site.email}`}>{site.email}</a></dd></div>
       </dl>
       <Form subject="Message from the website" button="Send message" id="contact">

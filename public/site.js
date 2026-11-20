@@ -59,3 +59,21 @@ document.querySelectorAll('form[data-mailto]').forEach(function (f) {
     try { localStorage.setItem(key, '1'); } catch (e) {}
   });
 })();
+
+// Home page header: clear over the photo, solid once the visitor scrolls.
+(function () {
+  var h = document.querySelector('.site-header.over');
+  if (!h) return;
+  function update() { h.classList.toggle('scrolled', window.scrollY > 40); }
+  update();
+  window.addEventListener('scroll', update, { passive: true });
+})();
+
+// Special services (Christmas and so on) hide themselves the day after they happen.
+(function () {
+  var today;
+  try { today = new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Vancouver' }).format(new Date()); } catch (e) { return; }
+  document.querySelectorAll('[data-until]').forEach(function (el) {
+    if (today > el.dataset.until) el.hidden = true;
+  });
+})();

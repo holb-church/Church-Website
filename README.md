@@ -13,7 +13,11 @@ Edit the value, save, and the whole site updates.
 | Show the Give page and menu item | `giveUrl` |
 | Send forms straight to the church inbox | `formKey` (free key from web3forms.com) |
 | Show the pastor on the About page | `pastor` |
-| Add a midweek service | add a line to `services` |
+| Change Sunday times or the coffee and fellowship lines | `services` and `sundayFlow` |
+| Change Last Friday Prayer or house group details | `gatherings` |
+| Add a Christmas or other special service (shows on the home page until the day after) | `specialServices` |
+| Show a church phone number | `phone` |
+| Add Facebook, Threads or X icons | `social` |
 | Set the real web address | `url` |
 
 Page wording lives in `src/pages/` (one file per page). Colours and fonts are at the top of `src/styles/global.css`.

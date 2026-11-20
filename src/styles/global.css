@@ -280,3 +280,67 @@ blockquote { margin: 0; }
 .cookie-note p { flex: 1 1 16rem; color: rgba(255,253,249,.88); }
 .cookie-note a { color: var(--gold); }
 .cookie-note button { min-height: 2.6rem; padding: .6rem 1.4rem; font-size: .7rem; }
+
+/* ── Pastor feedback, November 2026 ───────────────────────────── */
+
+/* Bolder type across the site */
+h1, h2, h3 { font-weight: 500; }
+.label { font-weight: 700; font-size: .76rem; letter-spacing: .26em; }
+.btn, .arrow, .menu-btn, .menu .close { font-weight: 700; }
+.lede { font-weight: 500; }
+.brand span { font-weight: 700; }
+.facts dt { font-weight: 700; }
+.field label { font-weight: 700; }
+
+/* Header stays on screen on every page. On the home page it starts clear over the photo
+   and turns solid once the visitor scrolls. */
+.site-header.over { position: fixed; top: 0; transition: background .3s, color .3s, border-color .3s; }
+.site-header.over.scrolled { background: color-mix(in srgb, var(--white) 94%, transparent); backdrop-filter: blur(10px); color: var(--navy); border-bottom-color: var(--line); }
+.site-header.over.scrolled .head-actions .btn { background: var(--navy); color: var(--white); border-color: var(--navy); }
+.site-header.over.scrolled .head-actions .btn:hover { background: transparent; color: var(--navy); }
+
+/* Church name in the hero: says plainly what and where we are */
+.hero-name { margin: 0; display: flex; flex-wrap: wrap; align-items: baseline; gap: .2rem .9rem; font: 700 clamp(1rem, 1.8vw, 1.35rem)/1.3 var(--text); letter-spacing: .16em; text-transform: uppercase; color: var(--gold); }
+.hero-name span { font-weight: 600; font-size: .78em; letter-spacing: .22em; color: rgba(255,253,249,.85); }
+
+/* A Sunday, hour by hour */
+.flow { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 1px solid var(--navy); }
+.flow li { display: flex; flex-direction: column; gap: .5rem; padding: 1.6rem 1.5rem 0 0; }
+.flow li + li { padding-left: 1.5rem; border-left: 1px solid var(--line); }
+.flow .time { font-family: var(--display); font-style: italic; font-size: 1.25rem; color: var(--gold-ink); }
+.flow h3 { font-size: clamp(1.3rem, 2vw, 1.6rem); }
+.flow p { color: var(--ink-soft); }
+.flow li.main h3 { font-weight: 600; }
+@media (max-width: 52rem) { .flow { grid-template-columns: 1fr; } .flow li, .flow li + li { padding: 1.4rem 0; border-left: 0; } .flow li + li { border-top: 1px solid var(--line); } }
+
+/* Special service band (Christmas) */
+.special { background: var(--paper); border-bottom: 1px solid var(--line); }
+.special .wrap { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 1.5rem 3rem; align-items: center; padding-block: clamp(2.5rem, 5vw, 3.5rem); }
+.special h2 { font-size: clamp(1.9rem, 4vw, 2.8rem); }
+.special .when { font-family: var(--display); font-size: 1.3rem; }
+@media (max-width: 52rem) { .special .wrap { grid-template-columns: 1fr; } }
+
+/* Links inside FAQ answers */
+.faq details .arrow { margin: -0.6rem 0 1.6rem; }
+
+/* Gatherings and forms on Get Involved */
+.gather-list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; border-top: 1px solid var(--navy); }
+.gather-list > div { display: flex; flex-direction: column; gap: .8rem; padding: 2rem 2rem 0 0; align-items: flex-start; }
+.gather-list > div + div { padding-left: 2rem; border-left: 1px solid var(--line); }
+.gather-list .when { font-family: var(--display); font-style: italic; font-size: 1.15rem; color: var(--gold-ink); }
+.gather-list p { color: var(--ink-soft); }
+@media (max-width: 56rem) { .gather-list { grid-template-columns: 1fr; } .gather-list > div, .gather-list > div + div { padding: 2rem 0; border-left: 0; } .gather-list > div + div { border-top: 1px solid var(--line); } }
+
+/* Social icons */
+.socials { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: .5rem; }
+.socials a { display: grid; place-items: center; width: 2.6rem; height: 2.6rem; border: 1px solid rgba(217,181,98,.45); border-radius: 50%; color: inherit; transition: color .2s, border-color .2s, background .2s; }
+.socials a:hover { color: var(--navy); background: var(--gold); border-color: var(--gold); }
+.site-footer ul.socials { flex-direction: row; gap: .5rem; }
+.site-footer .footer-socials { margin-top: .6rem; }
+
+/* Cookie notice: a small note in the corner, not a banner */
+.cookie-note { left: max(1rem, env(safe-area-inset-left, 0px)); right: auto; bottom: calc(1rem + env(safe-area-inset-bottom, 0px)); max-width: min(22rem, calc(100% - 2rem)); margin: 0; padding: .65rem .9rem; gap: .4rem 1rem; font-size: .78rem; line-height: 1.45; box-shadow: 0 6px 20px rgba(1,26,64,.22); }
+.cookie-note p { flex: 1 1 10rem; }
+.cookie-note button { min-height: 0; padding: .3rem 0; background: none; border: 0; color: var(--gold); font: 700 .7rem var(--text); letter-spacing: .18em; text-transform: uppercase; cursor: pointer; }
+.cookie-note button:hover { text-decoration: underline; }
+@media (max-width: 40rem) { .hero-name { font-size: .95rem; letter-spacing: .12em; text-wrap: balance; } }

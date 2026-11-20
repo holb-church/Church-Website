@@ -5,8 +5,12 @@ import Watch from '../components/Watch.astro';
 import { site } from '../site.config.mjs';
 const s = site.services[0];
 const dayIndex = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'].indexOf(s.day);
+const today = new Date().toISOString().slice(0, 10);
+const special = site.specialServices.filter((e) => e.date >= today);
+const longDate = (d) => new Date(d + 'T12:00:00Z').toLocaleDateString('en-CA', { timeZone: 'UTC', weekday: 'long', month: 'long', day: 'numeric' });
+const g = site.gatherings;
 ---
-<Base overHero description={`${site.name} is a church in South Vancouver, BC: a place to encounter Jesus, a family to belong to, and a life to grow in. Join us Sundays at 10 a.m. at ${site.address.street}.`}>
+<Base overHero description={`${site.fullName} in South Vancouver, BC: a place to encounter Jesus, a family to belong to, and a life to grow in. Join us Sundays at 10 a.m. at ${site.address.street}.`}>
   <Fragment slot="head"><link rel="preload" as="image" href="/photo-table.jpg" media="(min-width: 52.01rem)" /></Fragment>
 
   <section class="hero">
@@ -16,7 +20,7 @@ const dayIndex = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Frida
     </picture>
     <div class="wrap">
       <div class="hero-copy">
-        <span class="label" style="color:var(--gold)">House of Living Bread · Vancouver</span>
+        <p class="hero-name">{site.fullName} <span>Vancouver, BC</span></p>
         <h1>A place to <em>encounter Jesus.</em></h1>
         <p class="lede">A family to belong to, and a life to grow in. There is a seat at the table for you this Sunday.</p>
         <div class="actions">
@@ -24,13 +28,27 @@ const dayIndex = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Frida
           <a class="btn btn-line" href="/teachings">Watch a teaching</a>
         </div>
       </div>
-      <div class="next" data-next data-day={dayIndex} data-end={parseInt(s.end)} data-time="10 a.m.">
+      <div class="next" data-next data-day={dayIndex} data-end={Math.ceil(parseInt(s.end) + 0.5)} data-time="10 a.m.">
         <span class="label">Next Sunday</span>
         <strong>Every Sunday, 10 a.m.</strong>
         <span>{site.address.street}, {site.address.city}. <span data-away></span></span>
       </div>
     </div>
   </section>
+
+  {special.map((e) => (
+    <section class="special" data-until={e.date}>
+      <div class="wrap">
+        <div class="stack">
+          <span class="label">Join us</span>
+          <h2>{e.name}</h2>
+          <p class="when">{longDate(e.date)}, {e.time} · {site.address.street}</p>
+          <p class="soft">{e.blurb}</p>
+        </div>
+        <a class="btn" href="/visit#save-seat">Plan your visit</a>
+      </div>
+    </section>
+  ))}
 
   <section class="section">
     <div class="wrap offset">
@@ -41,7 +59,9 @@ const dayIndex = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Frida
       <div class="body">
         <p class="lede">Every Sunday we gather to worship, open the Bible, pray for one another and make room for the Holy Spirit. Everyone is welcome.</p>
         <dl class="facts">
-          <div><dt>Time</dt><dd>{s.label}</dd></div>
+          <div><dt>Service</dt><dd>{s.label}</dd></div>
+          <div><dt>Before</dt><dd>Coffee is on from 9:30. Come early and say hello.</dd></div>
+          <div><dt>After</dt><dd>Stay for fellowship. The pastors are always around to pray with you.</dd></div>
           <div><dt>Place</dt><dd>{site.address.street}, {site.address.city}</dd></div>
         </dl>
         <a class="btn btn-line" href="/visit">What to expect</a>
@@ -66,8 +86,8 @@ const dayIndex = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Frida
       </div>
       <div class="body">
         <p class="lede">Whether you are new to Vancouver, new to faith, or simply curious, we would love to meet you.</p>
-        <p class="soft">A Sunday runs about two hours. Children are welcome, and you can come as you are. Tell us you are coming and someone will meet you at the door.</p>
-        <div class="actions"><a class="btn" href="/visit#save-seat">Save my seat</a><a class="arrow" href="/visit">Your first Sunday</a></div>
+        <p class="soft">The service starts at 10 and ends by 11:30. Kids have their own ministry, and you are welcome to come exactly as you are.</p>
+        <div class="actions"><a class="btn" href="/visit">Plan your visit</a><a class="arrow" href="/visit">Your first Sunday</a></div>
       </div>
     </div>
   </section>
@@ -93,6 +113,41 @@ const dayIndex = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Frida
           <h3><em>Grow</em> in his life.</h3>
           <p>As the Word renews our minds, faith wakes up and lives change. We grow into who God already says we are.</p>
           <a class="arrow" href="/teachings">Teachings</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap stack-lg">
+      <div class="offset">
+        <div class="head">
+          <span class="label">Beyond Sunday</span>
+          <h2>Church is more than <em>a Sunday.</em></h2>
+        </div>
+        <div class="body">
+          <p class="lede">Pray with us, share a meal in someone's home, or lend a hand. There is a place for you here all week.</p>
+          <a class="btn btn-line" href="/get-involved">Get involved</a>
+        </div>
+      </div>
+      <div class="gather-list">
+        <div>
+          <span class="when">{g.prayer.when}, {g.prayer.time}</span>
+          <h3>{g.prayer.name}</h3>
+          <p>An evening of worship and prayer for our families and our city.</p>
+          <a class="arrow" href="/get-involved#prayer">Learn more</a>
+        </div>
+        <div>
+          <span class="when">{g.houseGroups.when}</span>
+          <h3>{g.houseGroups.name}</h3>
+          <p>Small groups that meet in homes to eat, pray and read the Bible together.</p>
+          <a class="arrow" href="/get-involved#house-groups">Join a group</a>
+        </div>
+        <div>
+          <span class="when">Whenever you are ready</span>
+          <h3>Volunteer with us</h3>
+          <p>Welcome guests, run the sound, help with kids, set up on Sunday. Many hands make the house a home.</p>
+          <a class="arrow" href="/get-involved#volunteer">Volunteer</a>
         </div>
       </div>
     </div>

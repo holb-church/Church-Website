@@ -1,0 +1,95 @@
+---
+import Base from '../layouts/Base.astro';
+import Form from '../components/Form.astro';
+import { site } from '../site.config.mjs';
+const g = site.gatherings;
+// Volunteer teams. Worship and preaching are not listed: those roles come by calling, not sign-up.
+const teams = [
+  'Welcome and hospitality (greeting, coffee)',
+  'Set-up and pack-down',
+  'Sound and visuals',
+  'Livestream and media',
+  'Kids’ ministry',
+  'Prayer team',
+  'Social media and design',
+  'Not sure yet, help me find my fit',
+];
+---
+<Base title="Get Involved" description={`Pray, share a meal, or serve with ${site.fullName} in Vancouver: Last Friday Prayer, house groups and volunteer teams.`}>
+  <section class="opener">
+    <div class="wrap">
+      <span class="label">Get involved</span>
+      <h1>More than <em>a Sunday.</em></h1>
+      <p class="lede">A house is a home all week long. Pray with us, share a meal in someone's living room, or lend a hand. There is a place for you.</p>
+      <div class="actions">
+        <a class="arrow" href="#prayer">Last Friday Prayer</a>
+        <a class="arrow" href="#house-groups">House groups</a>
+        <a class="arrow" href="#volunteer">Volunteer</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section tint" id="prayer">
+    <div class="wrap offset">
+      <div class="head">
+        <span class="label">{g.prayer.when}</span>
+        <h2>{g.prayer.name}: <em>an evening of prayer.</em></h2>
+      </div>
+      <div class="body">
+        <p class="lede">Once a month we set aside an evening to worship and pray together, for one another, for our families and for Vancouver.</p>
+        <p class="soft">We call it a vigil, but it finishes early enough to be home for dinner. Come for all of it or drop in when you can.</p>
+        <dl class="facts">
+          <div><dt>When</dt><dd>{g.prayer.when}</dd></div>
+          <div><dt>Time</dt><dd>{g.prayer.time}</dd></div>
+          <div><dt>Where</dt><dd>{site.address.street}, {site.address.city}</dd></div>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="house-groups">
+    <div class="wrap two">
+      <div class="stack">
+        <span class="label">{g.houseGroups.when}</span>
+        <h2>House <em>groups.</em></h2>
+        <p class="lede">Every other week, small groups meet in homes around the city to share a meal, pray and read the Bible together.</p>
+        <p class="soft">Groups take turns hosting, so the place changes from time to time. Register below and we will let you know where the next one is.</p>
+      </div>
+      <Form subject="House group registration" button="Register for a group" id="house-group-form">
+        <div class="row">
+          <div class="field"><label for="h-name">Your name</label><input id="h-name" name="name" data-label="Name" autocomplete="name" required /></div>
+          <div class="field"><label for="h-email">Email</label><input id="h-email" name="email" type="email" data-label="Email" autocomplete="email" required /></div>
+        </div>
+        <div class="row">
+          <div class="field"><label for="h-phone">Phone (optional)</label><input id="h-phone" name="phone" type="tel" data-label="Phone" autocomplete="tel" /></div>
+          <div class="field"><label for="h-area">Your area (optional)</label><input id="h-area" name="area" data-label="Area" placeholder="For example, Burnaby" /></div>
+        </div>
+        <div class="field"><label for="h-note">Anything you want us to know? (optional)</label><textarea id="h-note" name="message" data-label="Note"></textarea></div>
+      </Form>
+    </div>
+  </section>
+
+  <section class="section tint" id="volunteer">
+    <div class="wrap two">
+      <div class="stack">
+        <span class="label">Serve</span>
+        <h2>Volunteer <em>with us.</em></h2>
+        <p class="lede">Many hands make the house a home. Tell us where you would like to help and we will get in touch.</p>
+        <p class="soft">No experience needed for most teams. We will show you the ropes.</p>
+      </div>
+      <Form subject="Volunteer sign-up" button="Sign me up" id="volunteer-form">
+        <div class="row">
+          <div class="field"><label for="vo-name">Your name</label><input id="vo-name" name="name" data-label="Name" autocomplete="name" required /></div>
+          <div class="field"><label for="vo-email">Email</label><input id="vo-email" name="email" type="email" data-label="Email" autocomplete="email" required /></div>
+        </div>
+        <div class="row">
+          <div class="field"><label for="vo-phone">Phone (optional)</label><input id="vo-phone" name="phone" type="tel" data-label="Phone" autocomplete="tel" /></div>
+          <div class="field"><label for="vo-team">Where would you like to help?</label>
+            <select id="vo-team" name="team" data-label="Team">{teams.map((t) => <option>{t}</option>)}</select>
+          </div>
+        </div>
+        <div class="field"><label for="vo-note">Tell us a little about yourself (optional)</label><textarea id="vo-note" name="message" data-label="Note" placeholder="Skills, experience, or when you are free"></textarea></div>
+      </Form>
+    </div>
+  </section>
+</Base>

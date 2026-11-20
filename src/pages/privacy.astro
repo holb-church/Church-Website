@@ -8,7 +8,7 @@ const updated = 'November 2026';
     <div class="wrap">
       <span class="label">Privacy notice</span>
       <h1>Your details, <em>handled with care.</em></h1>
-      <p class="lede">This notice explains what personal information {site.name} collects through this website, why we collect it, and how we look after it.</p>
+      <p class="lede">This notice explains what personal information {site.fullName} collects through this website, why we collect it, and how we look after it.</p>
       <p class="soft">Last updated {updated}.</p>
     </div>
   </section>
@@ -16,12 +16,13 @@ const updated = 'November 2026';
   <section class="section flush-top">
     <div class="wrap prose">
       <h2>Who we are</h2>
-      <p>{site.name} is a church at {fullAddress}. We are responsible for the personal information described here. Questions about privacy go to our privacy contact at <a class="inline" href={`mailto:${site.email}`}>{site.email}</a> or {site.phone}.</p>
+      <p>{site.fullName} is a church at {fullAddress}. We are responsible for the personal information described here. Questions about privacy go to our privacy contact at <a class="inline" href={`mailto:${site.email}`}>{site.email}</a>{site.phone && ` or ${site.phone}`}.</p>
 
       <h2>What we collect and why</h2>
       <p>We only collect what you choose to send us through the forms on this site.</p>
       <ul>
         <li><strong>Save my seat (Plan a Visit):</strong> your name, email, and optionally your phone number, the Sunday you plan to come, how many are coming and any note you add. We use it to welcome you and to reply to your questions.</li>
+        <li><strong>House group and volunteer forms:</strong> your name, email, optionally your phone number, and what you are interested in. We use it to connect you with a group or a team.</li>
         <li><strong>Contact form:</strong> your name, email, the topic and your message. We use it to reply to you.</li>
         <li><strong>Prayer requests:</strong> if you send one, we use it only to pray for you and, if you ask, to follow up with you. Because a prayer request can be personal, we share it only with the pastors.</li>
       </ul>

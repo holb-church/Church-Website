@@ -1,9 +1,10 @@
 ---
 import '../styles/global.css';
 import { site, fullAddress, mapsLink, telLink } from '../site.config.mjs';
+import Socials from '../components/Socials.astro';
 
 const { title, description = site.tagline, noindex = false, overHero = false } = Astro.props;
-const pageTitle = title ? `${title} | ${site.name}` : `${site.name} | Church in South Vancouver, BC`;
+const pageTitle = title ? `${title} | ${site.fullName}` : `${site.fullName} | Vancouver, BC`;
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
 const ogImage = new URL('/og.jpg', Astro.site).href;
 const path = Astro.url.pathname.replace(/\/$/, '') || '/';
@@ -12,23 +13,23 @@ const path = Astro.url.pathname.replace(/\/$/, '') || '/';
 const menu = [
   { href: '/visit', label: 'Plan a visit', note: 'Sundays, 10 a.m.' },
   { href: '/about', label: 'About', note: 'Story, vision, pastors' },
+  { href: '/get-involved', label: 'Get involved', note: 'Prayer, groups, serving' },
   { href: '/teachings', label: 'Teachings', note: 'Watch and listen' },
   ...(site.giveUrl ? [{ href: '/give', label: 'Give', note: '' }] : []),
   { href: '/contact', label: 'Contact', note: 'Questions and prayer' },
 ];
 const socials = Object.entries(site.social).filter(([, url]) => url);
-const socialName = (n) => (n === 'youtube' ? 'YouTube' : n[0].toUpperCase() + n.slice(1));
 
 const schema = {
   '@context': 'https://schema.org',
   '@type': 'Church',
   name: site.name,
-  alternateName: site.shortName,
+  alternateName: [site.fullName, site.shortName],
   description: site.tagline,
   url: site.url,
   logo: new URL('/icon-512.png', Astro.site).href,
   image: ogImage,
-  telephone: site.phone,
+  ...(site.phone ? { telephone: site.phone } : {}),
   email: site.email,
   founder: [{ '@type': 'Person', name: 'Umesh Koli' }, { '@type': 'Person', name: 'Sweta Koli' }],
   address: {
@@ -44,6 +45,16 @@ const schema = {
   })),
   sameAs: socials.map(([, url]) => url),
 };
+// Upcoming special services (Christmas and so on) as events Google can show in search.
+const today = new Date().toISOString().slice(0, 10);
+const events = site.specialServices.filter((e) => e.date >= today).map((e) => ({
+  '@context': 'https://schema.org', '@type': 'Event', name: `${e.name} at ${site.fullName}`,
+  startDate: `${e.date}T${e.start}:00-08:00`, endDate: `${e.date}T${e.end}:00-08:00`,
+  eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode', eventStatus: 'https://schema.org/EventScheduled',
+  description: e.blurb, isAccessibleForFree: true,
+  location: { '@type': 'Place', name: site.fullName, address: { '@type': 'PostalAddress', streetAddress: site.address.street, addressLocality: site.address.city, addressRegion: site.address.region, postalCode: site.address.postalCode, addressCountry: site.address.country } },
+  organizer: { '@type': 'Organization', name: site.fullName, url: site.url },
+}));
 ---
 <!doctype html>
 <html lang="en-CA">
@@ -65,10 +76,11 @@ const schema = {
     <meta name="twitter:card" content="summary_large_image" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&display=swap" />
     {noindex && <meta name="robots" content="noindex" />}
     <slot name="head" />
     <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+    {events.map((e) => <script type="application/ld+json" set:html={JSON.stringify(e)} />)}
   </head>
   <body>
     <a class="skip" href="#main">Skip to content</a>
@@ -99,8 +111,8 @@ const schema = {
         </nav>
         <aside>
           <div><h3>Sundays</h3><p>{site.services[0].label}</p><p><a href={mapsLink} target="_blank" rel="noopener">{fullAddress}</a></p></div>
-          <div><h3>Reach us</h3><p><a href={telLink}>{site.phone}</a></p><p><a href={`mailto:${site.email}`}>{site.email}</a></p></div>
-          <div><h3>Follow</h3><ul>{socials.map(([n, url]) => <li><a href={url} target="_blank" rel="noopener">{socialName(n)}</a></li>)}</ul></div>
+          <div><h3>Reach us</h3>{site.phone && <p><a href={telLink}>{site.phone}</a></p>}<p><a href={`mailto:${site.email}`}>{site.email}</a></p></div>
+          <div><h3>Follow</h3><Socials /></div>
         </aside>
       </div>
     </div>
@@ -119,7 +131,8 @@ const schema = {
           <ul>
             <li><a href="/visit">Plan a visit</a></li>
             <li><a href="/visit#save-seat">Save a seat</a></li>
-            <li><a href={mapsLink} target="_blank" rel="noopener">Directions</a></li>
+            <li><a href="/visit#directions">Directions</a></li>
+            <li><a href="/get-involved">Get involved</a></li>
           </ul>
         </div>
         <div>
@@ -135,7 +148,8 @@ const schema = {
           <h3>Grow</h3>
           <ul>
             <li><a href="/teachings">Teachings</a></li>
-            {socials.map(([n, url]) => <li><a href={url} target="_blank" rel="noopener">{socialName(n)}</a></li>)}
+            <li><a href="/get-involved#prayer">Last Friday Prayer</a></li>
+            <li><a href="/get-involved#house-groups">House groups</a></li>
             {site.giveUrl && <li><a href="/give">Give</a></li>}
           </ul>
         </div>
@@ -144,20 +158,21 @@ const schema = {
           <ul>
             <li>{site.services[0].label}</li>
             <li><a href={mapsLink} target="_blank" rel="noopener"><address>{site.address.street}<br />{site.address.city}, {site.address.region} {site.address.postalCode}</address></a></li>
-            <li><a href={telLink}>{site.phone}</a></li>
+            {site.phone && <li><a href={telLink}>{site.phone}</a></li>}
             <li><a href={`mailto:${site.email}`}>{site.email}</a></li>
+            <li class="footer-socials"><Socials /></li>
           </ul>
         </div>
       </div>
       <div class="wrap legal">
-        <span>© {new Date().getFullYear()} {site.name}. {fullAddress}.</span>
+        <span>© {new Date().getFullYear()} {site.fullName}. {fullAddress}.</span>
         <span><a href="/privacy">Privacy notice</a></span>
         <span>Scripture taken from the New King James Version®. Copyright © 1982 by Thomas Nelson. Used by permission. All rights reserved.</span>
       </div>
     </footer>
     <div class="cookie-note" role="region" aria-label="Cookie notice" hidden data-cookie-note>
-      <p>This site uses cookies from YouTube and Google Maps to show our teachings and our map. By using the site, you accept this. <a href="/privacy#cookies">Learn more</a></p>
-      <button class="btn btn-gold" type="button" data-cookie-ok>OK</button>
+      <p>Our videos and map use a few cookies. <a href="/privacy#cookies">Privacy notice</a></p>
+      <button type="button" data-cookie-ok>Got it</button>
     </div>
     <script src="/site.js" defer></script>
   </body>
